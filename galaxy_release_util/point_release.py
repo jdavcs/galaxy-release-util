@@ -139,7 +139,7 @@ def read_package(package_path: pathlib.Path) -> Package:
 def parse_changelog(package: Package) -> List[ChangelogItem]:
 
     def append_change(changes, child):
-        if (rawsource := child.rawsource.strip()) and not rawsource.startswith("First release"):
+        if (rawsource := child.rawsource.strip()) and not rawsource.startswith("First release"):  # noqa: B020
             changes.append(f"* {rawsource}")
 
     settings = frontend.get_default_settings(Parser)  # type: ignore[attr-defined] ## upstream type stubs not updated?
@@ -273,7 +273,7 @@ def update_package_history(package: Package, new_version: Version):
         # Skip publishing packages if no change ?
         sorted_and_formatted_changes.append("No recorded changes since last release")
     else:
-        for pr in sorted(package.prs, key=lambda pr: pr.number):
+        for pr in sorted(package.prs, key=lambda pr: pr.number):  # noqa. B020
             category = "Other changes"
             text_target = _text_target(pr, skip_merge=False)
             if text_target:
